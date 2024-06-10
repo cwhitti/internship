@@ -24,14 +24,14 @@ void addChatNodeToList( ChatNodeList* chatNodeList, ChatNode* chatNode )
     }
     // set last item -> next to chatNode
     wkgPtr->next = createChatNodeFromData(chatNode->ip, chatNode->port, chatNode->name);
-    debug("List was not empty, added %s\n", chatNode->name);
+    debug("Added user to linked list: %s\n", chatNode->name);
 
   }
 
   // list is empty
   else
   {
-    debug("List was empty, adding %s\n", chatNode->name);
+    debug("Added FIRST user to linked list: %s\n", chatNode->name);
     chatNodeList -> firstPtr = createChatNodeFromData(chatNode->ip, chatNode->port, chatNode->name);
   }
 
