@@ -1,6 +1,9 @@
 # Use a base image with C development tools
 FROM gcc:latest
 
+# clear the make
+RUN make clear
+
 # Set the working directory inside the container
 WORKDIR /app
 
