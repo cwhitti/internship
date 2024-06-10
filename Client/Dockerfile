@@ -5,7 +5,7 @@ FROM gcc:latest
 WORKDIR /app
 
 # Copy the server and client directories into the container
-COPY .  /app/client
+COPY . /app/client
 
 # Compile the server and client code
 WORKDIR /app/client

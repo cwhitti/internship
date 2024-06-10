@@ -17,4 +17,4 @@ RUN make
 EXPOSE 1110
 
 # run the server
-CMD ["./build/chat_server src/server.properties"]
+CMD ["/app/server/build/chat_server /app/server/src/server.properties"]
