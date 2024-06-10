@@ -1,3 +1,5 @@
-build/./src/chat_node.c.o: src/chat_node.c src/chat_node.h
+build/./src/chat_node.c.o: src/chat_node.c src/chat_node.h src/dbg.h
 
 src/chat_node.h:
+
+src/dbg.h:
