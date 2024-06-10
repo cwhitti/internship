@@ -4,7 +4,6 @@ This codebase serves as a case study for the AFRL. A basic demonstration is link
 ## Use
 Once the server has been started, clients can begin connecting to a basic chatroom. All clients have a `properties` file (ex. claire.properties) which denote the server IP, server port, client IP, and client port, as well as the client username. Clients can connect through the terminal with`./build/chat_client src/<PROPERTY FILE>`. Once the client establishes a connection, the client can send commands to the server. The server recognizes the following command-line commands:
 
-### Valid Commands
   - **JOIN**: Connects client to the chat
   - **LEAVE**: Client leaves the chat but still stay connected to the server
   - **SHUTDOWN**: Client leaves the chat and disconnects from server
