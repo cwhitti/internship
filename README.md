@@ -12,7 +12,7 @@ Once the client establishes a connection, the client can send commands to the se
   - **SHUTDOWN_ALL**: Client shutsdown the entire server, ideally would be admin-only but it's not right now.
   - **NOTE**: Default command, any message sent that is not one of the former commands
 
-### Unused Commands
+Unused Commands
   - **JOINING/LEAVING**: Currently not used, but could be for some more complex UI
 
 ## Structure Overview
