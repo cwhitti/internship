@@ -2,7 +2,7 @@
 This codebase serves as a case study for the AFRL. A basic demonstration is linked [here](https://www.youtube.com/watch?v=U73MY2SoXKI).
 
 ## Use
-Once the server has been started, clients can begin connecting to a basic chatroom. All clients have a `properties` file (ex. claire.properties) which denote the server IP, server port, client IP, and client port, as well as the client username. The server recognizes the following command-line commands:
+Once the server has been started, clients can begin connecting to a basic chatroom. All clients have a `properties` file (ex. claire.properties) which denote the server IP, server port, client IP, and client port, as well as the client username. Clients can connect with the command `./build/chat_client src/<PROPERTY FILE>` The server recognizes the following command-line commands:
 
 ### Valid Commands
   - **JOIN**: Connects client to the chat
