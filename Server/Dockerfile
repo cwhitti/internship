@@ -1,20 +1,32 @@
-# Use a base image with C development tools
+# Use an official Ubuntu as a parent image
 FROM gcc:latest
 
-# Set the working directory inside the container
+# Set the maintainer label
+LABEL maintainer="twiggleicious@gmail.com"
+
+# Install dependencies
+
+
+# RUN apt-get update && apt-get install -y \
+#     build-essential \
+#     cmake \
+#     make \
+#     g++ \
+#     && rm -rf /var/lib/apt/lists/*
+
+# Create and set the working directory
 WORKDIR /app
 
-# Copy the server and client directories into the container
-COPY . /app/server
+# Copy the source code and Makefile into the container
+COPY src ./src
+COPY Makefile .
+COPY src/server.properties .
 
-# Compile the server and client code
-WORKDIR /app/server
+# Build the application
 RUN make
 
-# RUN gcc -o client/client_executable client/*.c
+# Expose the port the server is listening on
+EXPOSE 5000
 
-# Expose any necessary ports (if your server requires it)
-EXPOSE 1110
-
-# run the server
-CMD ["/app/server/build/chat_server /app/server/src/server.properties"]
+# Specify the command to run the application
+CMD ["./build/chat_server", "server.properties"]

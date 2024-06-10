@@ -27,7 +27,7 @@
 /* Function prototypes */
 
 /* Preprocessor directives */
-#define SERVER_ADDR "hwsrv-1035768.hostwindsdns.com"
+#define SERVER_ADDR 127.0.0.1//"hwsrv-1035768.hostwindsdns.com"
 
 #define FALSE 0
 #define TRUE !FALSE

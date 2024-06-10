@@ -1,19 +1,32 @@
-# Use a base image with C development tools
+# Use an official Ubuntu as a parent image
 FROM gcc:latest
 
-# Set the working directory inside the container
+# Set the maintainer label
+LABEL maintainer="twiggleicious@gmail.com"
+
+# Install dependencies
+
+
+# RUN apt-get update && apt-get install -y \
+#     build-essential \
+#     cmake \
+#     make \
+#     g++ \
+#     && rm -rf /var/lib/apt/lists/*
+
+# Create and set the working directory
 WORKDIR /app
 
-# Copy the server and client directories into the container
-COPY . /app/client
+# Copy the source code and Makefile into the container
+COPY src ./src
+COPY Makefile .
+COPY src/properties/local/claire-local.properties .
 
-# Compile the server and client code
-WORKDIR /app/client
+# Build the application
 RUN make
 
-# RUN gcc -o client/client_executable client/*.c
-
-# Expose any necessary ports (if your server requires it)
+# Expose the port the server is listening on
 EXPOSE 1110
 
-#CMD ["./build/chat_client src/properties/server/claire.properties"]
+# Specify the command to run the application
+CMD ["./build/chat_client", "claire-local.properties"]
