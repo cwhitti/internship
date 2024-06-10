@@ -1,6 +1,19 @@
 # TCP-Based Commandline Chat Application
 This codebase serves as a case study for the AFRL. A basic demonstration is linked [here](https://www.youtube.com/watch?v=U73MY2SoXKI).
 
+## Use
+Once the server has been started, clients can begin connecting to a basic chatroom. All clients have a `properties` file (ex. claire.properties) which denote the server IP, server port, client IP, and client port, as well as the client username. The server recognizes the following command-line commands:
+
+### Valid Commands
+  - **JOIN**: Connects client to the chat
+  - **LEAVE**: Client leaves the chat but still stay connected to the server
+  - **SHUTDOWN**: Client leaves the chat and disconnects from server
+  - **SHUTDOWN_ALL**: Client shutsdown the entire server, ideally would be admin-only but it's not right now.
+  - **NOTE**: Default command, any message sent that is not one of the former commands
+
+### Unused Commands
+  - **JOINING/LEAVING**: Currently not used, but could be for some more complex UI
+
 ## Structure Overview
 Both client and server can communicate with eachother using TCP protocol. The client and server have shared structures which are read and recieved.
 
@@ -48,16 +61,3 @@ Both client and server can communicate with eachother using TCP protocol. The cl
         LEAVING = 6
     } MessageType;
     ```
-## Use
-Once the server has been started, clients can begin connecting to a basic chatroom. All clients have a `properties` file (ex. claire.properties) which denote the server IP, server port, client IP, and client port, as well as the client username. The server recognizes the following command-line commands:
-
-### Valid Commands
-  - **JOIN**: Connects client to the chat
-  - **LEAVE**: Client leaves the chat but still stay connected to the server
-  - **SHUTDOWN**: Client leaves the chat and disconnects from server
-  - **SHUTDOWN_ALL**: Client shutsdown the entire server, ideally would be admin-only but it's not right now.
-  - **NOTE**: Default command, any message sent that is not one of the former commands
-
-### Unused Commands
-  - **JOINING/LEAVING**: Currently not used, but could be for some more complex UI
-
