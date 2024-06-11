@@ -1,12 +1,14 @@
 # Use an official Ubuntu as a parent image
 FROM gcc:latest
 
-# set variables
+# grab variables
 ARG USERNAME
-ENV DIR=remote
+ARG DIR
+ARG PORT
+
+# properties of file
 ENV PROPERTY_FILE=$USERNAME.properties
 ENV EXECUTABLE=./build/chat_client
-ENV PORT=1110
 
 # Create and set the working directory
 WORKDIR /app
@@ -19,11 +21,12 @@ COPY src/properties/$DIR/$PROPERTY_FILE .
 # Build the application
 RUN make
 
-# Conditionally set the port based on the directory
-RUN if [ "$DIR" = "local" ]; then export PORT=5000; fi
-
 # Expose the port the server is listening on
+RUN echo "Exposing port: $PORT"
+
 EXPOSE $PORT
 
 # Specify the command to run the application
 CMD sh -c "$EXECUTABLE $PROPERTY_FILE"
+
+RUN echo "Server is running on port ${PORT}"
