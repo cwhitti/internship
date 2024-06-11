@@ -27,5 +27,5 @@ docker build --build-arg USERNAME=$USERNAME --build-arg PORT=$PORT --build-arg D
 
 if [ "$2" = true ]; then
     echo "Running client..."
-    docker run --name client_container_$USERNAME -p $PORT:$PORT client_image_$USERNAME 
+    docker run -it --name client_container_$USERNAME -p $PORT:$PORT client_image_$USERNAME 
 fi
