@@ -28,13 +28,14 @@ void* senderLoop(void* arg)
         // function: deepCopyChatNode
     deepCopyChatNode( &msgStrct.messageSender, clientNode );
     msgStrct.messageType = NOTE;
+
+    printf("SERVER: Hi, %s! Type JOIN to begin chatting.\n", clientNode->name);
     
     // loop until message is a SHUTDOWN or SHUTDOWN_ALL
     while ( msgStrct.messageType !=  SHUTDOWN &&
             msgStrct.messageType !=  SHUTDOWN_ALL )
     {
-        printf("You: ");
-        
+
         fgets(msgStrct.noteContent, NOTE_LEN, stdin );
         
         // write data from string to message struct, check for success
