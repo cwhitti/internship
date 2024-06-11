@@ -1,23 +1,12 @@
 # Use an official Ubuntu as a parent image
 FROM gcc:latest
 
-
-ENV ENVIRONMENT=server
-ENV PROPERTY_FILE=claire.properties
+# set variables
+ARG USERNAME
+ENV DIR=local
+ENV PROPERTY_FILE=$USERNAME.properties
 ENV EXECUTABLE=./build/chat_client
-
-
-
-
-
-
-
-# RUN apt-get update && apt-get install -y \
-#     build-essential \
-#     cmake \
-#     make \
-#     g++ \
-#     && rm -rf /var/lib/apt/lists/*
+ENV PORT=1110
 
 # Create and set the working directory
 WORKDIR /app
@@ -25,13 +14,16 @@ WORKDIR /app
 # Copy the source code and Makefile into the container
 COPY src ./src
 COPY Makefile .
-COPY src/properties/$ENVIRONMENT/$PROPERTY_FILE .
+COPY src/properties/$DIR/$PROPERTY_FILE .
 
 # Build the application
 RUN make
 
+# Conditionally set the port based on the directory
+RUN if [ "$DIR" = "local" ]; then export PORT=5000; fi
+
 # Expose the port the server is listening on
-EXPOSE 1110
+EXPOSE $PORT
 
 # Specify the command to run the application
 CMD sh -c "$EXECUTABLE $PROPERTY_FILE"
