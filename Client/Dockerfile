@@ -1,6 +1,11 @@
 # Use an official Ubuntu as a parent image
 FROM gcc:latest
 
+
+ENV ENVIRONMENT=server
+ENV PROPERTY_FILE=claire.properties
+ENV EXECUTABLE=./build/chat_client
+
 # Set the maintainer label
 LABEL maintainer="twiggleicious@gmail.com"
 
@@ -20,7 +25,7 @@ WORKDIR /app
 # Copy the source code and Makefile into the container
 COPY src ./src
 COPY Makefile .
-COPY src/properties/local/claire-local.properties .
+COPY src/properties/$ENVIRONMENT/$PROPERTY_FILE .
 
 # Build the application
 RUN make
@@ -29,4 +34,4 @@ RUN make
 EXPOSE 1110
 
 # Specify the command to run the application
-CMD ["./build/chat_client", "claire-local.properties"]
+CMD ["./build/chat_client","$PROPERTY_FILE"]
