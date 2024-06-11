@@ -1,18 +1,10 @@
 # Use an official Ubuntu as a parent image
 FROM gcc:latest
 
-# Set the maintainer label
-LABEL maintainer="twiggleicious@gmail.com"
-
-# Install dependencies
-
-
-# RUN apt-get update && apt-get install -y \
-#     build-essential \
-#     cmake \
-#     make \
-#     g++ \
-#     && rm -rf /var/lib/apt/lists/*
+ENV DIR=remote
+ENV PROPERTY_FILE=$DIR.properties
+ENV EXECUTABLE=./build/chat_server
+ENV PORT=1110
 
 # Create and set the working directory
 WORKDIR /app
@@ -20,13 +12,17 @@ WORKDIR /app
 # Copy the source code and Makefile into the container
 COPY src ./src
 COPY Makefile .
-COPY src/server.properties .
+COPY src/properties/$DIR/$DIR.properties .
 
 # Build the application
 RUN make
 
-# Expose the port the server is listening on
-EXPOSE 5000
+# Conditionally set the port based on the directory
+RUN if [ "$DIR" = "local" ]; then export PORT=5000; fi
+
+# Expose the port
+EXPOSE $PORT
 
 # Specify the command to run the application
-CMD ["./build/chat_server", "server.properties"]
+CMD sh -c "$EXECUTABLE $PROPERTY_FILE"
+RUN echo "Booting up server on port $PORT..."
