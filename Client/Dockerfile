@@ -3,7 +3,7 @@ FROM gcc:latest
 
 # set variables
 ARG USERNAME
-ENV DIR=local
+ENV DIR=remote
 ENV PROPERTY_FILE=$USERNAME.properties
 ENV EXECUTABLE=./build/chat_client
 ENV PORT=1110
