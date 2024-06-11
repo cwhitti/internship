@@ -6,10 +6,10 @@ ENV ENVIRONMENT=server
 ENV PROPERTY_FILE=claire.properties
 ENV EXECUTABLE=./build/chat_client
 
-# Set the maintainer label
-LABEL maintainer="twiggleicious@gmail.com"
 
-# Install dependencies
+
+
+
 
 
 # RUN apt-get update && apt-get install -y \
@@ -34,4 +34,4 @@ RUN make
 EXPOSE 1110
 
 # Specify the command to run the application
-CMD ["./build/chat_client","$PROPERTY_FILE"]
+CMD sh -c "$EXECUTABLE $PROPERTY_FILE"
