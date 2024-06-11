@@ -21,9 +21,7 @@ fi
 
 export PORT=$(grep '^MY_PORT' "$PROPERTIES_FILE" | cut -d '=' -f 2 | tr -d '\r' | tr -d '\n' | tr -d ' ')
 
-
 docker build --build-arg USERNAME=$USERNAME --build-arg PORT=$PORT --build-arg DIR=$DIR -t client_image_$USERNAME .
-
 
 if [ "$2" = true ]; then
     echo "Running client..."

@@ -33,6 +33,8 @@ void* senderLoop(void* arg)
     while ( msgStrct.messageType !=  SHUTDOWN &&
             msgStrct.messageType !=  SHUTDOWN_ALL )
     {
+        printf("You: ");
+        
         fgets(msgStrct.noteContent, NOTE_LEN, stdin );
         
         // write data from string to message struct, check for success
