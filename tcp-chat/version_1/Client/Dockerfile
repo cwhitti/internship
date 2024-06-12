@@ -15,7 +15,6 @@ WORKDIR /app
 
 # Copy the source code and Makefile into the container
 COPY src ./src
-COPY ai_traffic ./ai_traffic
 COPY Makefile .
 COPY src/properties/$DIR/$PROPERTY_FILE .
 
