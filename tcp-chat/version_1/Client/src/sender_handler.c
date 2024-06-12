@@ -1,5 +1,5 @@
 #include "sender_handler.h"
-
+#define RUN_AS_AI
 /*
 Implements loop of listening for messages from server. Expects a pointer
 to a socket as the argument.
@@ -14,6 +14,7 @@ void* senderLoop(void* arg)
     // extract my chat node and the server chat node
     ChatNode* clientNode = argsPtr[0];
     ChatNode* serverNode = argsPtr[1];
+    FILE *filePointer;
 
     struct sockaddr_in serverAddress;
     int sendingSocket;
@@ -35,18 +36,25 @@ void* senderLoop(void* arg)
     while ( msgStrct.messageType !=  SHUTDOWN &&
             msgStrct.messageType !=  SHUTDOWN_ALL )
     {
+        #ifdef RUN_AS_AI
+        filePointer = fopen("src/input.txt", "r");
 
+        if (filePointer == NULL) 
+        {
+        printf("Error opening file!\n");
+        }
+        fgets(msgStrct.noteContent, NOTE_LEN, filePointer );
+        fclose(filePointer);
+
+        #else
         fgets(msgStrct.noteContent, NOTE_LEN, stdin );
         
+        #endif
         // write data from string to message struct, check for success
             // function: parseMessage
         parseMessage( msgStrct.noteContent, &msgStrct );
 
-            //printf("Parsed messge!\n");
-
         sendingSocket = socket(AF_INET, SOCK_STREAM, 0);
-
-        //printf("Created socket!\n");
 
         // connect sending socket to server socket
         if (connect(sendingSocket, (struct sockaddr *)&serverAddress,

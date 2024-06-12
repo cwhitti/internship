@@ -15,11 +15,14 @@ WORKDIR /app
 
 # Copy the source code and Makefile into the container
 COPY src ./src
+COPY ai_traffic ./ai_traffic
 COPY Makefile .
 COPY src/properties/$DIR/$PROPERTY_FILE .
 
 # Build the application
 RUN make
+
+# DONT FORGET TO SET UP AI STUFF
 
 # Expose the port the server is listening on
 RUN echo "Exposing port: $PORT"
@@ -29,4 +32,4 @@ EXPOSE $PORT
 # Specify the command to run the application
 CMD sh -c "$EXECUTABLE $PROPERTY_FILE"
 
-RUN echo "Server is running on port ${PORT}"
+RUN echo "Client is running on port ${PORT}"
