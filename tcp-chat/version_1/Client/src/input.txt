@@ -1,4 +1,9 @@
 JOIN
 Hey!
 Nice to meet you.
+Goodbye.
+LEAVE
+JOIN
+Hey I'm back!
+Time to leave again. Goodbye forever.
 SHUTDOWN
