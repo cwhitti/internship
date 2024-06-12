@@ -6,6 +6,7 @@
 
 int main(int argc, char** argv)
 {
+     printf("HIELLOxxxx");
     int server_socket;                 // descriptor of server socket
     struct sockaddr_in server_address; // for naming the server's listening socket
     ThreadArgs threadArgs; // create thread args
