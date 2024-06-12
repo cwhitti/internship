@@ -1,5 +1,4 @@
 #include "main.h"
-#define DBG
 
 /* ************************************************************************* */
 /* MAIN                                                                      */
@@ -14,6 +13,8 @@ int main(int argc, char** argv)
     int yes = 1;
     int port;
     Properties* properties;
+
+    printf("HIELLO");
 
     properties = property_read_properties(argv[1]);
     sscanf(property_get_property(properties, "SERVER_PORT"), "%d", &port);
