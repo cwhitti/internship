@@ -14,6 +14,7 @@ void* senderLoop(void* arg)
     // extract my chat node and the server chat node
     ChatNode* clientNode = argsPtr[0];
     ChatNode* serverNode = argsPtr[1];
+    printf("Server ip is %d, port is %d\n.",serverNode -> ip, serverNode -> port);
     FILE *filePointer;
 
     struct sockaddr_in serverAddress;

@@ -30,5 +30,3 @@ EXPOSE $PORT
 
 # Specify the command to run the application
 CMD sh -c "$EXECUTABLE $PROPERTY_FILE"
-
-RUN echo "Client is running on port ${PORT}"
