@@ -1,5 +1,5 @@
 #include "sender_handler.h"
-#define RUN_AS_AI
+//#define RUN_AS_AI
 /*
 Implements loop of listening for messages from server. Expects a pointer
 to a socket as the argument.
