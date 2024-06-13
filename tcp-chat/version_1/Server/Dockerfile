@@ -14,6 +14,7 @@ COPY Makefile .
 COPY src/properties/sever.properties .
 
 # Build the application
+RUN make clean
 RUN make
 
 # Expose the port

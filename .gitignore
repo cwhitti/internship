@@ -1,3 +1,2 @@
-Server/build
-Client/build
-properties
+**/build/
+**/properties/
