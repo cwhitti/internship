@@ -5,9 +5,9 @@ FROM gcc:latest
 ARG USERNAME
 ARG PORT
 
+# Build the application
 # properties of file
 ENV PROPERTY_FILE=$USERNAME.properties
-ENV EXECUTABLE=./build/chat_client
 
 # Create and set the working directory
 WORKDIR /app
@@ -17,11 +17,12 @@ COPY src ./src
 COPY Makefile .
 COPY src/properties/$PROPERTY_FILE .
 
-# Build the application
-RUN make clean
+# make stuff, clean just to be sure
+RUN make clean 
 RUN make
 
-# DONT FORGET TO SET UP AI STUFF
+# set executable
+ENV EXECUTABLE=./build/chat_client
 
 # Expose the port the server is listening on
 RUN echo "Exposing port: $PORT"
