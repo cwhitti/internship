@@ -13,6 +13,7 @@ void* receiverLoop(void* arg)
     ChatNode* serverNode = chatNodes[1];
     Message* inMsg;
     int yes = 1;
+    bool run = true;
 
     // set up a socket with my chat node info and start listening
     struct sockaddr_in clientAddress;
@@ -52,7 +53,7 @@ void* receiverLoop(void* arg)
     }
 
     // receiver loop
-    while (true)
+    while ( run )
     {
         // accept a new connection from server
         int serverSocket = accept(receivingSocket, NULL, NULL);
@@ -90,6 +91,7 @@ void* receiverLoop(void* arg)
 
             default:
             printf("You fucked up\n");
+            run = false;
             break;
         }
 

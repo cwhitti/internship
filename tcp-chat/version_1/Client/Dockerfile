@@ -15,7 +15,7 @@ WORKDIR /app
 # Copy the source code and Makefile into the container
 COPY src ./src
 COPY Makefile .
-COPY src/properties/properties/$PROPERTY_FILE .
+COPY src/properties/$PROPERTY_FILE .
 
 # Build the application
 RUN make clean
