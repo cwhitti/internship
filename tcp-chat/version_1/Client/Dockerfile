@@ -3,7 +3,6 @@ FROM gcc:latest
 
 # grab variables
 ARG USERNAME
-ARG DIR
 ARG PORT
 
 # properties of file
@@ -16,9 +15,10 @@ WORKDIR /app
 # Copy the source code and Makefile into the container
 COPY src ./src
 COPY Makefile .
-COPY src/properties/$DIR/$PROPERTY_FILE .
+COPY src/properties/properties/$PROPERTY_FILE .
 
 # Build the application
+RUN make clean
 RUN make
 
 # DONT FORGET TO SET UP AI STUFF

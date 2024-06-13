@@ -1,9 +1,10 @@
 # Use an official Ubuntu as a parent image
 FROM gcc:latest
 
+ARG PORT
+
 ENV PROPERTY_FILE=server.properties
 ENV EXECUTABLE=./build/chat_server
-ENV PORT=1110
 
 # Create and set the working directory
 WORKDIR /app
@@ -11,7 +12,7 @@ WORKDIR /app
 # Copy the source code and Makefile into the container
 COPY src ./src
 COPY Makefile .
-COPY src/properties/sever.properties .
+COPY src/properties/$PROPERTY_FILE .
 
 # Build the application
 RUN make clean

@@ -95,7 +95,7 @@ docker_build ()
     CLIENT_IMAGE_NAME="client_image_$USERNAME"
 
     # build
-    if ! docker build --build-arg USERNAME=$USERNAME --build-arg PORT=$PORT --build-arg -t $CLIENT_IMAGE_NAME . ; then
+    if ! docker build --build-arg USERNAME=$USERNAME --build-arg PORT=$PORT -t $CLIENT_IMAGE_NAME . ; then
         echo "Failed to build $CLIENT_IMAGE_NAME"
         exit 1
     fi
