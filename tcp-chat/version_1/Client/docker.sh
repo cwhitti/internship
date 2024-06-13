@@ -50,6 +50,8 @@ main () {
     PORT=$(grep '^MY_PORT' "$PROPERTIES_FILE" | cut -d '=' -f 2 | tr -d '\r' | tr -d '\n' | tr -d ' ')
     echo "PORT has been set to $PORT"
 
+    quit 1
+
     # build the client
     if [ "$BUILD_CLIENT" = true ]; then
         docker_build
