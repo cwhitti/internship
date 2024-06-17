@@ -5,6 +5,8 @@ ARG EXECUTABLE
 ARG PROPERTY_FILE
 ARG PORT
 
+ENV APP_EXECUTABLE=$EXECUTABLE
+
 # Set the working directory
 WORKDIR /app
 
@@ -15,8 +17,8 @@ EXPOSE $PORT
 
 # Compile the C code
 RUN echo "Command: gcc -Wall server.c properties.c -o $EXECUTABLE -pthread"
-RUN gcc -Wall server.c properties.c -o $EXECUTABLE -pthread
+RUN gcc -Wall server.c properties.c -o $APP_EXECUTABLE -pthread
 #RUN chmod +x $EXECUTABLE
 
-# Define the command to run the client executable
-#CMD sh -c "$EXECUTABLE $PROPERTY_FILE"
+# Define the command to run the server executable
+CMD sh -c "$APP_EXECUTABLE $PROPERTY_FILE"

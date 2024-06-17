@@ -24,7 +24,7 @@ int main()
   debug("Listening on port: %d", port);
 
   // get IP address of the common name server
-  //get_ip_address( SERVER_ADDR, ip_addr );
+  //get_ip_address( "localhost", ip_addr );
 
   // create an unnamed socket, and then name it
   client_socket = socket(AF_INET, SOCK_STREAM, 0);
