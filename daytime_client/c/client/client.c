@@ -5,7 +5,7 @@
 /************************************************************************
  * MAIN
  ************************************************************************/
-int main()
+int main(int argc, char const *argv[])
 {
   int client_socket;                  // client side socket
   struct sockaddr_in client_address;  // client socket naming struct
@@ -16,12 +16,19 @@ int main()
   int port;
   Properties* properties;
 
-  // set properties
-  properties = property_read_properties( "properties/client.properties" );
-  sscanf(property_get_property(properties, "CLIENT_PORT"), "%d", &port);
-  sscanf(property_get_property(properties, "SERVER_ADDR"), "%d", &ip_addr); // get IP address of the common name server
+  if ( argc < 2)
+  {
+    printf("Please supply a property file.");
+    exit(EXIT_FAILURE);
+  }
 
-  debug("Listening on port: %d", port);
+  properties = property_read_properties( argv[1] );
+
+  // get string properties
+  strncpy(ip_addr, property_get_property(properties, "SERVER_ADDR"), INET_ADDRSTRLEN);
+  sscanf(property_get_property(properties, "CLIENT_PORT"), "%d", &port);
+
+  debug("Listening on %u:%d\n\n", inet_addr(ip_addr), port);
 
   // get IP address of the common name server
   //get_ip_address( "localhost", ip_addr );
