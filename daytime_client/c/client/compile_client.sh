@@ -3,6 +3,7 @@
 # C source files
 SOURCE_FILES=(
     client.c
+    properties.c
 )
 
 # Output executable name
