@@ -62,12 +62,14 @@ int main(int argc, char** argv)
         exit(EXIT_FAILURE);
     }
 
+    debug( "Listening on ANY:%d\n", port);
     // ----------------------------------------------------------
     // server loop
     // ----------------------------------------------------------
     while (TRUE)
     {
-
+        printf("Listening for new client...\n");
+        
         // accept connection to client
         int client_socket = accept(server_socket, NULL, NULL);
         printf("\nServer with PID %d: accepted client\n", getpid());
