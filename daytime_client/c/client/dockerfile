@@ -3,12 +3,15 @@ FROM gcc:latest
 
 ARG EXECUTABLE
 ARG PROPERTY_FILE
+ARG PORT
 
 # Set the working directory
 WORKDIR /app
 
 # Copy the current directory contents into the container at /usr/src/myapp
 COPY . .
+
+EXPOSE $PORT
 
 # Compile the C code
 RUN gcc -Wall client.c properties.c -o $EXECUTABLE -pthread
