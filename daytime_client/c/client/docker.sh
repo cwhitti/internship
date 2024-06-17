@@ -6,11 +6,11 @@ RUN_CLIENT=false
 DEBUG=false
 CLEAN=false
 
-CTR_NAME="client_container"
-IMG_NAME="client_image"
+CTR_NAME=client_container
+IMG_NAME=client_image
 
-PROPERTIES_FILE="properties/client.properties"
-EXECUTABLE="./run_client"
+PROPERTIES_FILE=properties/client.properties
+EXECUTABLE=./run_client
 
 PORT=0
 

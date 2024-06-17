@@ -6,11 +6,11 @@ RUN_CLIENT=false
 DEBUG=false
 CLEAN=false
 
-CTR_NAME="server_container"
-IMG_NAME="server_image"
+CTR_NAME=server_container
+IMG_NAME=server_image
 
-PROPERTIES_FILE="properties/server.properties"
-EXECUTABLE="./run_server"
+PROPERTIES_FILE=properties/server.properties
+EXECUTABLE=./run_server
 
 PORT=0
 
@@ -20,7 +20,7 @@ reset=$(tput sgr0)
 # define main script
 main () {
 
-    # `d`eclare variables
+    # declare variables
         # none
 
     # check for bad call

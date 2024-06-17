@@ -1,6 +1,5 @@
 #include "server.h"
 #define DBG
-#include "dbg.h"
 
 /* ************************************************************************* */
 /* MAIN                                                                      */
@@ -13,13 +12,12 @@ int main(int argc, char** argv)
     int yes = 1;
 
     // add-ons
-    int PORT;
+    int port;
     Properties* properties;
 
     // set properties
     properties = property_read_properties( "properties/server.properties" );
-    sscanf(property_get_property(properties, "SERVER_PORT"), "%d", &PORT);
-    debug("Listening on port: %d", PORT);
+    sscanf(property_get_property(properties, "SERVER_PORT"), "%d", &port);
 
     // ----------------------------------------------------------
     // ignore SIGPIPE, sent when client disconnected
@@ -46,7 +44,7 @@ int main(int argc, char** argv)
     // ----------------------------------------------------------
     server_address.sin_family      = AF_INET;           // accept IP addresses
     server_address.sin_addr.s_addr = htonl(INADDR_ANY); // accept clients on any interface
-    server_address.sin_port        = htons(PORT);       // port to listen on
+    server_address.sin_port        = htons(port);       // port to listen on
 
     // binding unnamed socket to a particular port
     if (bind(server_socket, (struct sockaddr *)&server_address, sizeof(server_address)) != 0)
@@ -64,14 +62,14 @@ int main(int argc, char** argv)
         exit(EXIT_FAILURE);
     }
 
+    debug( "Listening on ANY:%d\n", port);
     // ----------------------------------------------------------
     // server loop
     // ----------------------------------------------------------
     while (TRUE)
     {
-
-        printf("Listening for client...");
-
+        printf("Listening for new client...\n");
+        
         // accept connection to client
         int client_socket = accept(server_socket, NULL, NULL);
         printf("\nServer with PID %d: accepted client\n", getpid());
@@ -97,6 +95,10 @@ int main(int argc, char** argv)
 }
 
 
+/* ************************************************************************* */
+/* handle client                                                             */
+/* ************************************************************************* */
+
 void* handle_client(void* arg)
 {
     int client_socket = *((int*)arg);   // the socket connected to the client
@@ -121,6 +123,10 @@ void* handle_client(void* arg)
 
     pthread_exit(NULL);
 }
+
+/* ************************************************************************* */
+/* handle client                                                             */
+/* ************************************************************************* */
 
 void get_current_time( char *outStr )
 {
