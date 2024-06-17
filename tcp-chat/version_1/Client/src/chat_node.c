@@ -1,8 +1,7 @@
 #include "chat_node.h"
 
-//#define DBG
+#define DBG
 #include "dbg.h"
-
 
 /*
   Function: addChatNodeToList
