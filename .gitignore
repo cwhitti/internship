@@ -1,4 +1,2 @@
-**/build/
 **/properties/
-/tcp-chat/version_1/Server/src/properties
-*.properties
+**/build/
