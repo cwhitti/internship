@@ -1,0 +1,17 @@
+# Use an official GCC image as the base image
+FROM gcc:latest
+
+ARG EXECUTABLE
+ARG PROPERTY_FILE
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the current directory contents into the container at /usr/src/myapp
+COPY . .
+
+# Compile the C code
+RUN gcc -Wall client.c properties.c -o $EXECUTABLE -pthread
+
+# Define the command to run the client executable
+#CMD sh -c "$EXECUTABLE $PROPERTY_FILE"
