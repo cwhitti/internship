@@ -4,7 +4,9 @@
 BUILD_CLIENT=false
 RUN_CLIENT=false
 DEBUG=false
-CLEAN=false
+CLEAN_ALL=false
+CLEAN_CTR=false
+CLEAN_IMG=false
 
 CTR_NAME=client_container
 IMG_NAME=client_image
@@ -28,7 +30,7 @@ main () {
 
     check_file
 
-    # Iterate over arguments
+   # Iterate over arguments
     while [[ $# -gt 0 ]]; do
 
         # begin after 2nd arg
@@ -43,8 +45,19 @@ main () {
             -db) # debug flag
                 DEBUG=true
                 ;;
-            -c) # clean docker
-                CLEAN=true
+            -ca) # clean all
+                CLEAN_ALL=true
+                ;;
+            -cc) # clean containers
+                CLEAN_CTR=true
+                ;;
+            -ci) # clear images
+                CLEAN_IMG=true
+                ;;
+            *)
+                usage
+                exit 1
+                ;;
 
         esac
         shift # Shift arguments left
@@ -59,10 +72,21 @@ main () {
     # export debug command
     export DEBUG
 
+    # clean containers
+    if [ $CLEAN_ALL = true ] || [ $CLEAN_CTR = true ]; then
+
+        docker_clean_containers # clean containers
+
+        if [ $CLEAN_CTR = true ]; then # exit only if we clear just containers
+            exit 0
+        fi
+        
+    fi
+
     # clean existing stuff
-    if [ $CLEAN = true ]; then
-        docker_clean
-        exit 0
+    if [ $CLEAN_ALL = true ] || [ $CLEAN_IMG = true ]; then
+        docker_clean_images # clean images
+        exit 0 # definitely exit, nothing to run
     fi
 
     # build the client
@@ -111,7 +135,7 @@ docker_build ()
     fi
 }
 
-docker_clean ()
+docker_clean_containers ()
 {
     # Check if there are any containers to stop and remove
     if [ -n "$(docker ps -a -q)" ]; then
@@ -120,12 +144,20 @@ docker_clean ()
 
         echo "Removing all stopped containers..."
         docker rm $(docker ps -a -q)    # Remove all containers
+    else
+        echo "No containers to remove."
+    fi
+}
 
+docker_clean_images ()
+{
+    # Check if there are any containers to stop and remove
+    if [ -n "$(docker ps -a -q)" ]; then
             # Delete all images
         echo "Deleting all images..."
         docker rmi $(docker images -q)  # Delete all images
     else
-        echo "Nothing to stop or remove."
+        echo "No images to remove."
     fi
 }
 
@@ -134,7 +166,8 @@ docker_run ()
 {
     echo "Trying to run $bold$CTR_NAME$reset from $bold$IMG_NAME$reset..."
 
-    docker run -it --name $CTR_NAME -p $PORT:$PORT $IMG_NAME
+    docker run -it --name $CTR_NAME $IMG_NAME
+    #docker run -it --name $CTR_NAME -p $PORT:$PORT $IMG_NAME
 }
 
 echo_variables ()
@@ -148,13 +181,14 @@ echo_variables ()
 
 usage () 
 {
-    echo "$bold Usage$reset: $0 <username> [-b] [-r] [-ai]
-        "
-    echo "$bold Options$reset:"
-    echo "  -c        Clear all previous images and containers"
-    echo "  -b        Build the image"
-    echo "  -r        Run the server"
-    echo "  -db       Run with debug"
+    echo "Usage: $0 [-b] [-r] [-db] [-ca] [-cc] [-ci]"
+    echo "Options:"
+    echo "  -b         Build image"
+    echo "  -r         Run image"
+    echo "  -db        Debug flag"
+    echo "  -ca        Clean all"
+    echo "  -cc        Clean containers"
+    echo "  -ci        Clear images"
 }
 
 # run the main script
