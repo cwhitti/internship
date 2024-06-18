@@ -18,7 +18,7 @@ EXPOSE $PORT
 # Compile the C code
 RUN echo "Command: gcc -Wall server.c properties.c -o $EXECUTABLE -pthread"
 RUN gcc -Wall server.c properties.c -o $APP_EXECUTABLE -pthread
-#RUN chmod +x $EXECUTABLE
 
-# Define the command to run the server executable
+# Run the file
+    # NOTE: property file doesnt do anything, is hard coded, need to fix this
 CMD sh -c "$APP_EXECUTABLE $PROPERTY_FILE"

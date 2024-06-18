@@ -16,13 +16,7 @@ int main(int argc, char const *argv[])
   int port;
   Properties* properties;
 
-  if ( argc < 2)
-  {
-    printf("Please supply a property file.");
-    exit(EXIT_FAILURE);
-  }
-
-  properties = property_read_properties( argv[1] );
+  properties = property_read_properties( "properties/client.properties" );
 
   // get string properties
   strncpy(ip_addr, property_get_property(properties, "SERVER_ADDR"), INET_ADDRSTRLEN);

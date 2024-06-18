@@ -35,7 +35,6 @@ main () {
         case "$1" in
             -b) # build image
                 BUILD_CLIENT=true
-
                 ;;
             -r) # run image
                 RUN_CLIENT=true
@@ -45,6 +44,7 @@ main () {
                 ;;
             -c) # clean docker
                 CLEAN=true
+                ;;
 
         esac
         shift # Shift arguments left
@@ -55,9 +55,6 @@ main () {
     # PORT=$(grep '^CLIENT_PORT' "$PROPERTIES_FILE" | cut -d '=' -f 2 | tr -d '\r' | tr -d '\n' | tr -d ' ')
     
     echo_variables
-
-    # export debug command
-    export DEBUG
 
     # clean existing stuff
     if [ $CLEAN = true ]; then
@@ -134,7 +131,8 @@ docker_run ()
 {
     echo "Trying to run $bold$CTR_NAME$reset from $bold$IMG_NAME$reset..."
 
-    docker run -it --name $CTR_NAME -p $PORT:$PORT $IMG_NAME
+    docker run -it --name $CTR_NAME $IMG_NAME
+    #docker run -it --name $CTR_NAME -p $PORT:$PORT $IMG_NAME
 }
 
 echo_variables ()
@@ -148,8 +146,7 @@ echo_variables ()
 
 usage () 
 {
-    echo "$bold Usage$reset: $0 <username> [-b] [-r] [-ai]
-        "
+    echo "$bold Usage$reset: $0 <username> [-b] [-r] [-ai] "
     echo "$bold Options$reset:"
     echo "  -c        Clear all previous images and containers"
     echo "  -b        Build the image"
