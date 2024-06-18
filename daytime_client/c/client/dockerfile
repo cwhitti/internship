@@ -8,7 +8,7 @@ ARG PORT
 # Set the working directory
 WORKDIR /app
 
-ENV APP_EXECUTABLE = $EXECUTABLE
+ENV APP_EXECUTABLE=$EXECUTABLE
 
 # Copy the current directory contents into the container at /usr/src/myapp
 COPY . .

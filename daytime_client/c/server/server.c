@@ -62,7 +62,8 @@ int main(int argc, char** argv)
         exit(EXIT_FAILURE);
     }
 
-    debug( "Listening on ANY:%d\n", port);
+    printf( "Listening on %d:%d\n", server_address.sin_addr.s_addr, port);
+
     // ----------------------------------------------------------
     // server loop
     // ----------------------------------------------------------
