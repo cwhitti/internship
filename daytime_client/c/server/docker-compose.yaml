@@ -1,0 +1,95 @@
+volumes:
+  curtdbv:
+
+services:
+  curtail:
+    environment:
+      CURTAIL_PATH: '/home/curtail/private'
+      DATABASE_URL: 'postgres://postgres:3HGJI6hJclYleHhkra+qUg@curtdb/curtail'
+      VCAP_SERVICES: '{}'
+#    image: registry.kube.curtailsecurity.com/curtail/regrade/curtail-sensor:master
+    image: curtail.azurecr.io/curtail-sensor:latest
+    volumes:
+      - ./private:/home/curtail/private
+    cap_add:
+      - IPC_LOCK
+      - SYS_PTRACE
+    networks:
+      securenet:
+        aliases:
+          - securenet_curtail
+      pubnet:
+        aliases:
+          - pubnet_curtail
+    links:
+      - nginx
+      - envoy
+      - curtdb:curtdb
+    ports:
+      - "10081:80"
+      - "4317:4317"
+    restart: always
+
+  curtui:
+    image: curtail.azurecr.io/curtail-ui:latest
+    user: 0:0
+    environment:
+      CURTAIL_HTTPS_PORT: 4430
+      DATABASE_URL: 'postgres://postgres:3HGJI6hJclYleHhkra+qUg@curtdb/curtail'
+      DOCKER_NETWORK: cloudflare_securenet
+    volumes:
+      - ./private:/home/curtail/private
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      securenet:
+        aliases:
+          - curtui
+    ports:
+      - "14430:4430"
+      - "18080:8080"
+    restart: always
+
+  curtdb:
+    image: postgres:13.2
+    environment:
+      POSTGRES_PASSWORD: 3HGJI6hJclYleHhkra+qUg
+      POSTGRES_DB: curtail
+    ports:
+      - "5434:5432"
+    volumes:
+      - curtdbv:/var/lib/postgresql/data
+    networks:
+      securenet:
+        aliases:
+          - curtdb
+    restart: always
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    image: demo-chunky
+    ports:
+      - 8008:80
+    environment:
+      TESTAPP_PORT: "80"
+    networks:
+      securenet:
+
+  envoy:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    image: demo-chunky
+    ports:
+      - 8009:80
+    environment:
+      TESTAPP_PORT: "80"
+      BUGGY: 1
+      JSONDELAY: 350
+    networks:
+      securenet:
+
+networks:
+  securenet:
+  pubnet:

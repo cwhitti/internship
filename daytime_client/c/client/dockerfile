@@ -5,17 +5,20 @@ ARG EXECUTABLE
 ARG PROPERTY_FILE
 ARG PORT
 
+ENV APP_EXECUTABLE=$EXECUTABLE
+
 # Set the working directory
 WORKDIR /app
-
-ENV APP_EXECUTABLE=$EXECUTABLE
 
 # Copy the current directory contents into the container at /usr/src/myapp
 COPY . .
 
-RUN chmod +x compile_client.sh
-RUN ./compile_client.sh
+EXPOSE $PORT
 
-RUN chmod +x run_client
-RUN ./run_client
+# Compile the C code
+RUN echo "Command: gcc -Wall server.c properties.c -o $EXECUTABLE -pthread"
+RUN gcc -Wall server.c properties.c -o $APP_EXECUTABLE -pthread
+#RUN chmod +x $EXECUTABLE
 
+# Define the command to run the server executable
+CMD sh -c "$APP_EXECUTABLE $PROPERTY_FILE"

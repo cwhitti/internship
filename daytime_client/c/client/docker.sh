@@ -37,7 +37,6 @@ main () {
         case "$1" in
             -b) # build image
                 BUILD_CLIENT=true
-
                 ;;
             -r) # run image
                 RUN_CLIENT=true
@@ -45,6 +44,7 @@ main () {
             -db) # debug flag
                 DEBUG=true
                 ;;
+                
             -ca) # clean all
                 CLEAN_ALL=true
                 ;;
@@ -189,7 +189,6 @@ usage ()
     echo "  -ca        Clean all"
     echo "  -cc        Clean containers"
     echo "  -ci        Clear images"
-}
 
 # run the main script
 main "$@"
