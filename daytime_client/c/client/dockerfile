@@ -13,8 +13,9 @@ ENV APP_EXECUTABLE=$EXECUTABLE
 # Copy the current directory contents into the container at /usr/src/myapp
 COPY . .
 
-# Compile the C code
-RUN gcc -Wall client.c properties.c -o $EXECUTABLE
+RUN chmod +x compile_client.sh
+RUN ./compile_client.sh
 
-# Define the command to run the client executable
-CMD sh -c "$APP_EXECUTABLE $PROPERTY_FILE"
+RUN chmod +x run_client
+RUN ./run_client
+

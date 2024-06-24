@@ -116,10 +116,6 @@ check_file ()
 
 docker_build ()
 {
-    echo docker build --build-arg EXECUTABLE=$EXECUTABLE \
-                      --build-arg PROPERTY_FILE=$PROPERTIES_FILE \
-                      --build-arg PORT=$PORT \
-                      -t $IMG_NAME .
     # build
     if ! docker build --build-arg EXECUTABLE=$EXECUTABLE \
                       --build-arg PROPERTY_FILE=$PROPERTIES_FILE \

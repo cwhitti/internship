@@ -16,13 +16,7 @@ int main(int argc, char const *argv[])
   int port;
   Properties* properties;
 
-  if ( argc < 2)
-  {
-    printf("Please supply a property file.");
-    exit(EXIT_FAILURE);
-  }
-
-  properties = property_read_properties( argv[1] );
+  properties = property_read_properties( "properties/client.properties" );
 
   // get string properties
   strncpy(ip_addr, property_get_property(properties, "SERVER_ADDR"), INET_ADDRSTRLEN);
@@ -31,7 +25,7 @@ int main(int argc, char const *argv[])
   debug("Listening on %u:%d\n\n", inet_addr(ip_addr), port);
 
   // get IP address of the common name server
-  //get_ip_address( "localhost", ip_addr );
+  // get_ip_address( "localhost", ip_addr );
 
   // create an unnamed socket, and then name it
   client_socket = socket(AF_INET, SOCK_STREAM, 0);
