@@ -125,10 +125,6 @@ void* handle_client(void* arg)
     pthread_exit(NULL);
 }
 
-/* ************************************************************************* */
-/* handle client                                                             */
-/* ************************************************************************* */
-
 void get_current_time( char *outStr )
 {
   // declare variables
