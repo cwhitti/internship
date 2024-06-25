@@ -7,9 +7,11 @@ then
   HOSTIP=127.0.0.1
 fi
 
+# Where is this grep from? Where can I change it to NOT be afrl_cloudbleed.curtail?
 SENSORNAME=`docker ps --format='{{ .Names }}' | grep afrl_cloudbleed.curtail.`
 UINAME=`docker ps --format='{{ .Names }}' | grep afrl_cloudbleed.curtui.`
 
+# Why do we care about establishing demoport vs admin port? is this leftover code?
 DEMOPORT=`docker port ${SENSORNAME} | sed 's/^.*://'`
 ADMINPORT=`docker port ${UINAME} | sed 's/^.*://'`
 
