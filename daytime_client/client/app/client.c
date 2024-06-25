@@ -16,7 +16,7 @@ int main(int argc, char const *argv[])
   int port;
   Properties* properties;
 
-  properties = property_read_properties( "properties/client.properties" );
+  properties = property_read_properties( "client/app/properties/client.properties" );
 
   // get string properties
   strncpy(ip_addr, property_get_property(properties, "SERVER_ADDR"), INET_ADDRSTRLEN);

@@ -16,9 +16,8 @@ int main(int argc, char** argv)
     Properties* properties;
 
     // set properties
-    properties = property_read_properties( "app/properties/server.properties" );
+    properties = property_read_properties( "server/app_copy/properties/server.properties" );
     sscanf(property_get_property(properties, "SERVER_PORT"), "%d", &port);
-    printf("OOPS\n");
 
     // ----------------------------------------------------------
     // ignore SIGPIPE, sent when client disconnected

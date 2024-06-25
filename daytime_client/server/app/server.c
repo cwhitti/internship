@@ -16,7 +16,7 @@ int main(int argc, char** argv)
     Properties* properties;
 
     // set properties
-    properties = property_read_properties( "app_copy/properties/server.properties" );
+    properties = property_read_properties( "server/app/properties/server.properties" );
     sscanf(property_get_property(properties, "SERVER_PORT"), "%d", &port);
 
     // ----------------------------------------------------------

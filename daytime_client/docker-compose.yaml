@@ -86,7 +86,6 @@ services:
     environment:
       TESTAPP_PORT: "80"
       BUGGY: 1
-      JSONDELAY: 350
     networks:
       securenet:
 
