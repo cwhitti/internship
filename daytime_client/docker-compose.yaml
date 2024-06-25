@@ -74,6 +74,7 @@ services: # DO NOT CHANGE
       #   network traffic on?
       # - My server runs on port 80. Where should the client connect to?
       # - How are environmental variables used here?
+      # - How does config.json and package.json work in tandem here
 
   nginx:
     build:
@@ -100,6 +101,7 @@ services: # DO NOT CHANGE
         # Is this so that both bugged and not bugged apps can run the same file (app.js),
         # and the flow control is in the file?
         # As opposed to having two containers, where one uses app.js and the other use for example app_copy.js?
+      JSONDELAY: 350 # Is this important? Is it related to package.json?
     networks:
       securenet:
 
