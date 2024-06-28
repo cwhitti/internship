@@ -17,10 +17,12 @@
 
 //define debug
 //#define DBG
+//#define PORT 80
 
 // custom h files
 #include "properties.h"
 #include "dbg.h"
+
 /* Function prototypes */
 void* handle_client(void* arg);
 void get_current_time( char *outStr );

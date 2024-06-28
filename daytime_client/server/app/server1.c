@@ -10,14 +10,30 @@ int main(int argc, char** argv)
     int server_socket;                 // descriptor of server socket
     struct sockaddr_in server_address; // for naming the server's listening socket
     int yes = 1;
+    //const char *port_str = getenv("PORT");
+    //int port;
+
+    // grab PORT
+    // if (port_str != NULL) 
+    // {
+    //     int port = atoi(port_str); // Convert string to integer
+    //     printf("Port number is %d\n", port);
+    // } 
+    
+    // else 
+    // {
+    //     printf("PORT environment variable is not set.\n");
+    //     exit(EXIT_FAILURE);
+    // }
 
     // add-ons
-    int port;
-    Properties* properties;
+    //int port;
+    //Properties* properties;
 
     // set properties
-    properties = property_read_properties( "server/app/properties/server.properties" );
-    sscanf(property_get_property(properties, "SERVER_PORT"), "%d", &port);
+    // properties = property_read_properties( "server/app/properties/server.properties" );
+    // sscanf(property_get_property(properties, "SERVER_PORT"), "%d", &port);
+    //port = argv[0];
 
     // ----------------------------------------------------------
     // ignore SIGPIPE, sent when client disconnected
@@ -44,7 +60,7 @@ int main(int argc, char** argv)
     // ----------------------------------------------------------
     server_address.sin_family      = AF_INET;           // accept IP addresses
     server_address.sin_addr.s_addr = htonl(INADDR_ANY); // accept clients on any interface
-    server_address.sin_port        = htons(port);       // port to listen on
+    server_address.sin_port        = htons(PORT);       // port to listen on
 
     // binding unnamed socket to a particular port
     if (bind(server_socket, (struct sockaddr *)&server_address, sizeof(server_address)) != 0)
@@ -62,7 +78,7 @@ int main(int argc, char** argv)
         exit(EXIT_FAILURE);
     }
 
-    printf( "Listening on %d:%d\n", server_address.sin_addr.s_addr, port);
+    printf( "Listening on %d:%d\n", server_address.sin_addr.s_addr, PORT);
 
     // ----------------------------------------------------------
     // server loop

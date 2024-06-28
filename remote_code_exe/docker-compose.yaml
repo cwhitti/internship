@@ -46,7 +46,7 @@ services: # DO NOT CHANGE
           - curtui
     ports:
       - "14430:4430"
-      - "18080:8080" 
+      - "18080:8080"
     restart: always
 
   curtdb: # DO NOT CHANGE
@@ -68,36 +68,41 @@ services: # DO NOT CHANGE
   # CONTAINER SPECIFICS
   # ///////////////////////////////////////////  
 
+  # Biggest questions:
+      # - What is the purpose of nginx and envoy? Why have two?
+      # - Does curtail see nginx and envoy and consider those two containers the ones to watch 
+      #   network traffic on?
+      # - My server runs on port 80. Where should the client connect to?
+      # - How are environmental variables used here?
+      # - How does config.json and package.json work in tandem here
+
   nginx:
     build:
       context: .
-      dockerfile: dockerfile
-      args: # pass args to dockerfile
-        SERVERFILE: server1.c
-        APP_EXECUTABLE: server1.o
-        PORT: 80
-        DEFINE_DBG: 1 # Define for debug mode
-    image: basic-tcp1
+      dockerfile: Dockerfile
+    image: demo-chunky
     ports:
-      - 8008:80 # when running client, connect to DEMOPORT not this
-    #environment:
+      - 8008:80 # Am I routing traffic to port 8008, or to port 10081?
+    environment:
+      TESTAPP_PORT: "80" # What does this do?
     networks:
       securenet:
 
   envoy:
     build:
       context: .
-      dockerfile: dockerfile
-      args:
-        SERVERFILE: server2.c
-        APP_EXECUTABLE: server2.o
-        PORT: 80
-        DEFINE_DBG: 1 # Define for debug mode
-    image: basic-tcp2
+      dockerfile: Dockerfile
+    image: demo-chunky # Why is this named the same as the top one, will it matter?
     ports:
       - 8009:80
-    #environment:
-    networks: #specific to docker
+    environment:
+      TESTAPP_PORT: "80"
+      BUGGY: 1 # Obviously an environmental variable for the app.js app
+        # Is this so that both bugged and not bugged apps can run the same file (app.js),
+        # and the flow control is in the file?
+        # As opposed to having two containers, where one uses app.js and the other use for example app_copy.js?
+      JSONDELAY: 350 # Is this important? Is it related to package.json?
+    networks:
       securenet:
 
 networks:

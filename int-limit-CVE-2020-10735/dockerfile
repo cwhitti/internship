@@ -1,0 +1,18 @@
+# Use an official GCC image as the base image
+FROM gcc:latest
+
+ENV APP_EXECUTABLE=app/server.py
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the current directory contents into the container at /usr/src/myapp
+COPY app .
+
+# Compile the C code
+RUN echo "Command: gcc -Wall server.c properties.c -o $EXECUTABLE -pthread"
+RUN gcc -Wall server.c properties.c -o $APP_EXECUTABLE -pthread
+
+# Run the file
+    # NOTE: property file doesnt do anything, is hard coded, need to fix this
+CMD sh -c "$APP_EXECUTABLE"

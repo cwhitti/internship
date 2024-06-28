@@ -1,20 +1,29 @@
 # Use an official GCC image as the base image
 FROM gcc:latest
 
+# Define arguments
+ARG SERVERFILE
+ARG APP_EXECUTABLE
+ARG PORT
+ARG DEFINE_DBG
+
+ENV APP_EXECUTABLE=$APP_EXECUTABLE
+
 # Set the working directory
 WORKDIR /app
 
-# Copy the current directory contents into the container at /usr/src/myapp
+# Copy the current directory contents into the container at /app
 COPY server/app .
 
-ENV APP_EXECUTABLE=testserver.o
+# Compile the C code with condition for debug
+RUN if [ $DEFINE_DBG == 1 ]; then \
+        echo "Building in debug mode"; \
+        gcc -Wall $SERVERFILE properties.c -o $APP_EXECUTABLE -pthread -DPORT=$PORT -DDBG; \
+    else \
+        echo "Building in release mode"; \
+        gcc -Wall $SERVERFILE properties.c -o "$APP_EXECUTABLE" -pthread -DPORT=$PORT; \
+    fi
 
-EXPOSE $TESTAPP_PORT
-
-# Compile the C code
-RUN echo "Command: gcc -Wall server.c properties.c -o $EXECUTABLE -pthread"
-RUN gcc -Wall server.c properties.c -o $APP_EXECUTABLE -pthread
-
-# Run the file
-    # NOTE: property file doesnt do anything, is hard coded, need to fix this
-CMD sh -c "$APP_EXECUTABLE"
+# Run the executable
+RUN echo "Running app: $APP_EXECUTABLE"
+CMD sh -c "./${APP_EXECUTABLE}"
